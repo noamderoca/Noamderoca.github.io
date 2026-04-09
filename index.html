@@ -36,7 +36,6 @@ body {
   cursor: none;
 }
 
-/* ── Cursor ── */
 .cursor {
   width: 7px; height: 7px;
   background: var(--text-1);
@@ -57,7 +56,6 @@ body {
   opacity: 0.4;
 }
 
-/* ── Nav ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 100;
@@ -84,7 +82,6 @@ nav.scrolled {
 }
 .nav-links a:hover { color: var(--text-1); }
 
-/* ── Hero ── */
 .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
 
 .hero-left {
@@ -149,7 +146,6 @@ nav.scrolled {
 }
 .scroll-text { font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-3); }
 
-/* Hero right – ShapeDiver viewer */
 .hero-right {
   position: relative; overflow: hidden;
   background: var(--surface);
@@ -196,7 +192,6 @@ nav.scrolled {
   opacity: 0; animation: fadeUp 1s 2s forwards;
 }
 
-/* ── Marquee ── */
 .marquee-wrap {
   overflow: hidden;
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
@@ -210,7 +205,6 @@ nav.scrolled {
 .marquee-sep { color: var(--accent); }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* ── About ── */
 .about {
   padding: 9rem 3rem; display: grid; grid-template-columns: 220px 1fr;
   gap: 5rem; max-width: 1200px; margin: 0 auto;
@@ -223,38 +217,24 @@ nav.scrolled {
 }
 .about-text h2 em { font-style: italic; color: var(--accent); }
 .about-text p { font-size: 0.65rem; line-height: 2.3; color: var(--text-2); max-width: 580px; margin-bottom: 1.5rem; }
-.about-stats {
-  display: flex; gap: 4rem; margin-top: 3.5rem;
-  padding-top: 2.5rem; border-top: 1px solid var(--border);
-}
+.about-stats { display: flex; gap: 4rem; margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
 .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: var(--text-1); line-height: 1; }
 .stat-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); margin-top: 0.5rem; }
 
-/* ── Work ── */
 .work {
   padding: 4rem 3rem 9rem;
   background: var(--bg-alt);
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
 }
-.work-header {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  max-width: 1200px; margin: 0 auto 3rem;
-}
-.work-header h2 {
-  font-family: 'Cormorant Garamond', serif; font-weight: 300;
-  font-size: clamp(1.8rem, 2.8vw, 2.4rem); color: var(--text-1);
-}
+.work-header { display: flex; justify-content: space-between; align-items: flex-end; max-width: 1200px; margin: 0 auto 3rem; }
+.work-header h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.8rem, 2.8vw, 2.4rem); color: var(--text-1); }
 
-/* Featured */
 .featured-model {
   max-width: 1200px; margin: 0 auto 2px;
   display: grid; grid-template-columns: 280px 1fr;
   border: 1px solid var(--border); background: var(--surface); min-height: 480px;
 }
-.featured-model-meta {
-  padding: 3rem; display: flex; flex-direction: column;
-  justify-content: space-between; border-right: 1px solid var(--border);
-}
+.featured-model-meta { padding: 3rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--border); }
 .featured-label { font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
 .featured-title { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--text-1); line-height: 1.1; margin-bottom: 0.5rem; }
 .featured-cat { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); }
@@ -269,14 +249,8 @@ nav.scrolled {
 .featured-cta:hover { border-color: var(--accent); }
 .featured-model-visual { position: relative; overflow: hidden; background: var(--bg); }
 .featured-model-visual svg { width: 100%; height: 100%; display: block; }
-.featured-tag {
-  position: absolute; bottom: 1.5rem; right: 1.5rem;
-  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--text-3); padding: 5px 10px;
-  border: 1px solid var(--border-2); border-radius: 2px;
-}
+.featured-tag { position: absolute; bottom: 1.5rem; right: 1.5rem; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); padding: 5px 10px; border: 1px solid var(--border-2); border-radius: 2px; }
 
-/* Project cards */
 .project-cards { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
 .project-card { background: var(--surface); overflow: hidden; cursor: none; transition: background 0.3s; }
 .project-card:hover { background: var(--surface-2); }
@@ -288,7 +262,6 @@ nav.scrolled {
 .project-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--text-1); margin-bottom: 0.3rem; }
 .project-card-cat { font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); }
 
-/* ── Services ── */
 .services { padding: 9rem 3rem; max-width: 1200px; margin: 0 auto; }
 .services-intro { display: grid; grid-template-columns: 220px 1fr; gap: 5rem; margin-bottom: 4rem; }
 .services-intro h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 3vw, 2.6rem); color: var(--text-1); line-height: 1.2; }
@@ -300,7 +273,6 @@ nav.scrolled {
 .service-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--text-1); margin-bottom: 1rem; }
 .service-desc { font-size: 0.6rem; line-height: 2.1; color: var(--text-2); }
 
-/* ── Process ── */
 .process { padding: 6rem 3rem 9rem; background: var(--dark); border-top: 1px solid var(--border); }
 .process-inner { max-width: 1200px; margin: 0 auto; }
 .process-header { display: grid; grid-template-columns: 220px 1fr; gap: 5rem; margin-bottom: 5rem; }
@@ -313,21 +285,14 @@ nav.scrolled {
 .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; color: var(--text-1); margin-bottom: 1rem; }
 .step-desc { font-size: 0.6rem; line-height: 2.1; color: var(--text-3); }
 
-/* ── Contact ── */
 .contact { padding: 9rem 3rem; text-align: center; background: var(--bg); }
 .contact-label { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; display: block; }
 .contact h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.5rem, 5vw, 5rem); color: var(--text-1); line-height: 1.1; margin-bottom: 1.5rem; }
 .contact h2 em { font-style: italic; color: var(--accent); }
 .contact p { font-size: 0.62rem; line-height: 2.2; color: var(--text-2); max-width: 420px; margin: 0 auto 3.5rem; }
-.contact-email {
-  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300;
-  color: var(--text-1); text-decoration: none;
-  border-bottom: 1px solid var(--border-2); padding-bottom: 4px;
-  transition: color 0.2s, border-color 0.2s; display: inline-block; margin-bottom: 3rem;
-}
+.contact-email { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--text-1); text-decoration: none; border-bottom: 1px solid var(--border-2); padding-bottom: 4px; transition: color 0.2s, border-color 0.2s; display: inline-block; margin-bottom: 3rem; }
 .contact-email:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ── Footer ── */
 footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-alt); }
 .footer-logo { font-family: 'DM Mono', monospace; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-1); text-decoration: none; }
 .footer-copy { font-size: 0.55rem; letter-spacing: 0.15em; color: var(--text-3); }
@@ -335,12 +300,10 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
 .footer-links a { font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--text-1); }
 
-/* ── Animations ── */
 @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── Responsive ── */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .hero-right { height: 60vw; min-height: 400px; }
@@ -362,7 +325,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Nav -->
 <nav id="navbar">
   <a href="#" class="logo">Studio Roca</a>
   <ul class="nav-links">
@@ -374,7 +336,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </ul>
 </nav>
 
-<!-- Hero -->
 <section class="hero" id="hero">
   <div class="hero-left">
     <p class="hero-label">Architecture &amp; Product Design — Montréal</p>
@@ -393,7 +354,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
       <span class="scroll-text">Scroll</span>
     </div>
   </div>
-
   <div class="hero-right">
     <div class="viewer-badge"><span class="badge-dot"></span>Live · Interactive</div>
     <iframe
@@ -408,7 +368,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </div>
 </section>
 
-<!-- Marquee -->
 <div class="marquee-wrap">
   <div class="marquee-track">
     <span class="marquee-item">Architecture</span><span class="marquee-item marquee-sep">·</span>
@@ -424,7 +383,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </div>
 </div>
 
-<!-- About -->
 <section class="about" id="about">
   <div><p class="section-label reveal">About</p></div>
   <div class="about-text">
@@ -439,13 +397,11 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </div>
 </section>
 
-<!-- Work -->
 <section class="work" id="work">
   <div class="work-header reveal">
     <h2>Selected Work</h2>
     <a href="#contact" class="btn">Get in touch</a>
   </div>
-
   <div class="featured-model reveal">
     <div class="featured-model-meta">
       <div>
@@ -461,13 +417,8 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
     <div class="featured-model-visual">
       <svg viewBox="0 0 560 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;display:block;">
         <rect width="560" height="480" fill="#09090c"/>
-        <defs>
-          <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
-          </pattern>
-        </defs>
+        <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/></pattern></defs>
         <rect width="560" height="480" fill="url(#g)"/>
-        <!-- Wall panel -->
         <rect x="80" y="60" width="400" height="140" fill="rgba(49,125,212,0.04)" stroke="rgba(49,125,212,0.25)" stroke-width="0.8"/>
         <line x1="140" y1="80" x2="140" y2="180" stroke="rgba(49,125,212,0.1)" stroke-width="0.5"/>
         <line x1="220" y1="80" x2="220" y2="180" stroke="rgba(49,125,212,0.1)" stroke-width="0.5"/>
@@ -475,26 +426,21 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
         <line x1="380" y1="80" x2="380" y2="180" stroke="rgba(49,125,212,0.1)" stroke-width="0.5"/>
         <line x1="100" y1="120" x2="460" y2="120" stroke="rgba(49,125,212,0.08)" stroke-width="0.5"/>
         <line x1="100" y1="150" x2="460" y2="150" stroke="rgba(49,125,212,0.08)" stroke-width="0.5"/>
-        <!-- Desktop -->
         <rect x="80" y="200" width="400" height="14" fill="rgba(49,125,212,0.1)" stroke="rgba(49,125,212,0.5)" stroke-width="0.9"/>
-        <!-- Legs -->
         <rect x="80" y="214" width="36" height="180" fill="rgba(49,125,212,0.06)" stroke="rgba(49,125,212,0.3)" stroke-width="0.7"/>
         <rect x="444" y="214" width="36" height="180" fill="rgba(49,125,212,0.06)" stroke="rgba(49,125,212,0.3)" stroke-width="0.7"/>
         <line x1="80" y1="207" x2="480" y2="207" stroke="rgba(49,125,212,0.2)" stroke-width="0.5"/>
-        <!-- Control dots -->
         <circle cx="80"  cy="200" r="3.5" fill="#317DD4" opacity="0.9"/>
         <circle cx="480" cy="200" r="3.5" fill="#317DD4" opacity="0.9"/>
         <circle cx="280" cy="200" r="3.5" fill="#317DD4" opacity="0.9"/>
         <circle cx="80"  cy="394" r="3"   fill="#317DD4" opacity="0.5"/>
         <circle cx="480" cy="394" r="3"   fill="#317DD4" opacity="0.5"/>
-        <!-- Dimension lines -->
         <line x1="80" y1="420" x2="480" y2="420" stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
         <line x1="80" y1="413" x2="80"  y2="427" stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
         <line x1="480" y1="413" x2="480" y2="427" stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
         <line x1="40" y1="60"  x2="40"  y2="394" stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
         <line x1="33" y1="60"  x2="47"  y2="60"  stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
         <line x1="33" y1="394" x2="47"  y2="394" stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
-        <!-- Leader lines -->
         <line x1="480" y1="200" x2="530" y2="165" stroke="rgba(49,125,212,0.2)" stroke-width="0.5"/>
         <line x1="530" y1="165" x2="555" y2="165" stroke="rgba(49,125,212,0.15)" stroke-width="0.4"/>
         <line x1="480" y1="394" x2="530" y2="412" stroke="rgba(49,125,212,0.2)" stroke-width="0.5"/>
@@ -503,8 +449,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
       <span class="featured-tag">Technical drawing · Parametric</span>
     </div>
   </div>
-
-  <!-- Project cards -->
   <div class="project-cards reveal">
     <div class="project-card">
       <div class="project-card-visual">
@@ -527,15 +471,14 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
         <div class="project-card-cat">Product Design · 2024</div>
       </div>
     </div>
-
     <div class="project-card">
       <div class="project-card-visual">
         <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
           <rect width="600" height="400" fill="#0f0f16"/>
-          <path d="M100 370 L300 50 L500 370 Z"   fill="none" stroke="rgba(49,125,212,0.22)" stroke-width="0.9"/>
-          <path d="M140 330 L300 100 L460 330 Z"  fill="none" stroke="rgba(49,125,212,0.17)" stroke-width="0.7" opacity="0.8"/>
-          <path d="M180 290 L300 150 L420 290 Z"  fill="none" stroke="rgba(49,125,212,0.13)" stroke-width="0.6" opacity="0.7"/>
-          <path d="M220 250 L300 200 L380 250 Z"  fill="none" stroke="rgba(49,125,212,0.09)" stroke-width="0.5" opacity="0.5"/>
+          <path d="M100 370 L300 50 L500 370 Z"  fill="none" stroke="rgba(49,125,212,0.22)" stroke-width="0.9"/>
+          <path d="M140 330 L300 100 L460 330 Z" fill="none" stroke="rgba(49,125,212,0.17)" stroke-width="0.7" opacity="0.8"/>
+          <path d="M180 290 L300 150 L420 290 Z" fill="none" stroke="rgba(49,125,212,0.13)" stroke-width="0.6" opacity="0.7"/>
+          <path d="M220 250 L300 200 L380 250 Z" fill="none" stroke="rgba(49,125,212,0.09)" stroke-width="0.5" opacity="0.5"/>
           <line x1="100" y1="370" x2="500" y2="370" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
           <circle cx="300" cy="50"  r="4"   fill="#317DD4" opacity="0.9"/>
           <circle cx="100" cy="370" r="2.5" fill="#317DD4" opacity="0.5"/>
@@ -548,7 +491,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
         <div class="project-card-cat">Architecture · 2023</div>
       </div>
     </div>
-
     <div class="project-card">
       <div class="project-card-visual">
         <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
@@ -573,7 +515,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </div>
 </section>
 
-<!-- Services -->
 <section class="services" id="services">
   <div class="services-intro">
     <p class="section-label reveal">Services</p>
@@ -603,7 +544,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </div>
 </section>
 
-<!-- Process -->
 <section class="process">
   <div class="process-inner">
     <div class="process-header">
@@ -635,7 +575,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   </div>
 </section>
 
-<!-- Contact -->
 <section class="contact" id="contact">
   <span class="contact-label reveal">Let's work together</span>
   <h2 class="reveal">Start a<br><em>conversation.</em></h2>
@@ -644,7 +583,6 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   <a href="mailto:hello@studioroca.design" class="btn reveal">Send a message</a>
 </section>
 
-<!-- Footer -->
 <footer>
   <a href="#" class="footer-logo">Studio Roca</a>
   <p class="footer-copy">© 2026 Studio Roca. All rights reserved.</p>
@@ -656,38 +594,21 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
 </footer>
 
 <script>
-// Custom cursor
 const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursorRing');
-let mx=0, my=0, rx=0, ry=0;
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{ mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'; });
+(function loop(){ rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ ring.style.width='54px';ring.style.height='54px';ring.style.opacity='0.2'; });
+  el.addEventListener('mouseleave',()=>{ ring.style.width='28px';ring.style.height='28px';ring.style.opacity='0.4'; });
 });
-(function animateRing() {
-  rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
-  ring.style.left = rx+'px'; ring.style.top = ry+'px';
-  requestAnimationFrame(animateRing);
-})();
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.style.width='54px'; ring.style.height='54px'; ring.style.opacity='0.2'; });
-  el.addEventListener('mouseleave', () => { ring.style.width='28px'; ring.style.height='28px'; ring.style.opacity='0.4'; });
-});
-
-// Navbar
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-
-// Scroll reveal
-const observer = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i*80); observer.unobserve(e.target); } });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Dismiss customize hint
-const hint = document.getElementById('customizeHint');
-if (hint) setTimeout(() => { hint.style.opacity='0'; setTimeout(()=>hint.remove(),600); }, 10000);
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>20),{passive:true});
+const obs=new IntersectionObserver((entries)=>entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target); } }),{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const hint=document.getElementById('customizeHint');
+if(hint) setTimeout(()=>{ hint.style.opacity='0';setTimeout(()=>hint.remove(),600); },10000);
 </script>
 </body>
 </html>
