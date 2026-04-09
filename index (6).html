@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Roca — Architecture & Product Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F2EE;
+    --stone: #E8E3DC;
+    --ink: #1A1916;
+    --ink-light: #6B6860;
+    --ink-faint: #B0ADA8;
+    --accent: #C4A882;
+    --accent-dark: #8B7355;
+    --white: #FDFCFB;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--ink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.35s ease, width 0.3s, height 0.3s;
+    opacity: 0.35;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 3rem 5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+    line-height: 1.0;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent-dark);
+  }
+
+  .hero-sub {
+    margin-top: 2.5rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    line-height: 2.4;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 3.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+
+  .btn {
+    display: inline-block;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+
+  .btn-ghost {
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+
+  /* Parametric SVG hero right */
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--stone);
+  }
+
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .param-path {
+    fill: none;
+    stroke: #c8c0b4;
+    stroke-width: 0.6;
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: draw 3s ease forwards;
+  }
+
+  .param-path:nth-child(2) { animation-delay: 0.3s; stroke: #d4ccc4; }
+  .param-path:nth-child(3) { animation-delay: 0.6s; stroke: #bbb3a8; }
+  .param-path:nth-child(4) { animation-delay: 0.9s; }
+  .param-path:nth-child(5) { animation-delay: 1.1s; stroke: #d4ccc4; }
+  .param-path:nth-child(6) { animation-delay: 1.3s; }
+  .param-path:nth-child(7) { animation-delay: 0.5s; stroke: #c0b8b0; }
+  .param-path:nth-child(8) { animation-delay: 0.8s; }
+
+  .param-dot {
+    fill: var(--accent);
+    opacity: 0;
+    animation: dotPop 0.4s ease forwards;
+  }
+  .param-dot:nth-child(9)  { animation-delay: 2s; }
+  .param-dot:nth-child(10) { animation-delay: 2.2s; }
+  .param-dot:nth-child(11) { animation-delay: 2.4s; }
+  .param-dot:nth-child(12) { animation-delay: 2.6s; }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes dotPop {
+    from { opacity: 0; r: 0; }
+    to { opacity: 1; r: 3; }
+  }
+
+  .hero-tag {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    opacity: 0;
+    animation: fadeUp 1s 2s forwards;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards;
+  }
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--ink-faint);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    animation: scanLine 2s ease-in-out infinite;
+    transform: translateX(-100%);
+  }
+  @keyframes scanLine {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
+  .scroll-text {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Marquee */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--stone);
+    border-bottom: 1px solid var(--stone);
+    padding: 0.85rem 0;
+    background: var(--white);
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+  .marquee-item {
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 3rem;
+  }
+  .marquee-sep { color: var(--accent); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* About */
+  .about {
+    padding: 9rem 3rem;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 0.4rem;
+  }
+
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+  }
+  .about-text h2 em { font-style: italic; color: var(--accent-dark); }
+
+  .about-text p {
+    font-size: 0.68rem;
+    line-height: 2.3;
+    color: var(--ink-light);
+    max-width: 580px;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-stats {
+    display: flex;
+    gap: 4rem;
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--stone);
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 0.5rem;
+  }
+
+  /* Work */
+  .work {
+    padding: 4rem 3rem 9rem;
+    background: var(--white);
+  }
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+  }
+  .work-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+    color: var(--ink);
+  }
+
+  /* Featured model */
+  .featured-model {
+    max-width: 1200px;
+    margin: 0 auto 2px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    border: 1px solid var(--stone);
+    background: var(--cream);
+    min-height: 580px;
+  }
+  .featured-model-meta {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--stone);
+  }
+  .featured-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin-bottom: 1rem;
+  }
+  .featured-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .featured-cat {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .featured-desc {
+    font-size: 0.62rem;
+    line-height: 2;
+    color: var(--ink-light);
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--stone);
+  }
+  .featured-model-viewer {
+    width: 100%;
+    height: 100%;
+    min-height: 580px;
+    overflow: hidden;
+  }
+  .featured-model-viewer iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 580px;
+    border: none;
+    display: block;
+  }
+
+  /* Project cards */
+  .project-cards {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--stone);
+  }
+  .project-card {
+    background: var(--cream);
+    overflow: hidden;
+    cursor: none;
+    transition: background 0.3s;
+  }
+  .project-card:hover { background: var(--white); }
+  .project-card-visual {
+    width: 100%;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+  }
+  .project-card-visual svg {
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .project-card:hover .project-card-visual svg { transform: scale(1.04); }
+  .project-card-info {
+    padding: 1.5rem 2rem 2rem;
+    border-top: 1px solid var(--stone);
+  }
+  .project-card-num {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .project-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .project-card-cat {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Services */
+  .services {
+    padding: 9rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .services-intro {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 5rem;
+    margin-bottom: 4rem;
+  }
+  .services-intro h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .services-intro h2 em { font-style: italic; color: var(--accent-dark); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--stone);
+  }
+  .service-item {
+    padding: 2.5rem 3rem;
+    border-right: 1px solid var(--stone);
+    border-bottom: 1px solid var(--stone);
+    transition: background 0.3s;
+  }
+  .service-item:hover { background: var(--white); }
+  .service-num {
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .service-desc {
+    font-size: 0.63rem;
+    line-height: 2.1;
+    color: var(--ink-light);
+  }
+
+  /* Process */
+  .process {
+    padding: 6rem 3rem 9rem;
+    background: var(--ink);
+  }
+  .process-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .process-header {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 5rem;
+    margin-bottom: 5rem;
+  }
+  .process-header .section-label { color: var(--accent); }
+  .process-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    color: var(--cream);
+    line-height: 1.2;
+  }
+  .process-header h2 em { font-style: italic; color: var(--accent); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+  .process-step {
+    padding: 0 2.5rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .step-num {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2rem;
+    padding-top: 2px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 1.5rem;
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .step-desc {
+    font-size: 0.62rem;
+    line-height: 2.1;
+    color: var(--ink-faint);
+  }
+
+  /* Contact */
+  .contact {
+    padding: 9rem 3rem;
+    text-align: center;
+    background: var(--cream);
+  }
+  .contact-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin-bottom: 2rem;
+    display: block;
+  }
+  .contact h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .contact h2 em { font-style: italic; color: var(--accent-dark); }
+  .contact p {
+    font-size: 0.65rem;
+    line-height: 2.2;
+    color: var(--ink-light);
+    max-width: 420px;
+    margin: 0 auto 3.5rem;
+  }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink-faint);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+  .contact-email:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
+
+  /* Footer */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--stone);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--white);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .footer-copy {
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--ink); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ShapeDiver */
+  .shapediver-section {
+    padding: 9rem 3rem;
+    background: var(--white);
+  }
+  .shapediver-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .shapediver-header {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 5rem;
+    margin-bottom: 4rem;
+  }
+  .shapediver-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .shapediver-header h2 em { font-style: italic; color: var(--accent-dark); }
+  .shapediver-desc {
+    font-size: 0.65rem;
+    line-height: 2.2;
+    color: var(--ink-light);
+    max-width: 500px;
+  }
+  .shapediver-viewer-wrap {
+    border: 1px solid var(--stone);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #shapediver-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: var(--stone);
+  }
+  #shapediver-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+  .sd-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--stone);
+    z-index: 10;
+    transition: opacity 0.5s;
+  }
+  .sd-loading.hidden { opacity: 0; pointer-events: none; }
+  .sd-loading-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .sd-spinner {
+    width: 32px; height: 32px;
+    border: 1px solid var(--ink-faint);
+    border-top-color: var(--accent-dark);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  .sd-loading p {
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { height: 50vw; }
+    .about, .services-intro, .process-header { grid-template-columns: 1fr; gap: 2rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .project-cards { grid-template-columns: 1fr; }
+    .featured-model { grid-template-columns: 1fr; min-height: auto; }
+    .featured-model-meta { border-right: none; border-bottom: 1px solid var(--stone); }
+    .featured-model-viewer { min-height: 480px; }
+    .featured-model-viewer iframe { min-height: 480px; }
+    .services-grid { grid-template-columns: 1fr; }
+    nav { padding: 1.5rem 1.5rem; }
+    .hero-left { padding: 7rem 1.5rem 3rem; }
+    .about, .services, .contact, .work { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="logo">Studio Roca</a>
+  <ul class="nav-links">
+    <li><a href="#model">Model</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-label">Architecture &amp; Product Design — Montréal</p>
+    <h1 class="hero-title">
+      Form<br>follows<br><em>parameter.</em>
+    </h1>
+    <p class="hero-sub">
+      Computational design studio<br>
+      shaping space &amp; object through<br>
+      parametric logic
+    </p>
+    <div class="hero-cta">
+      <a href="#work" class="btn">View work</a>
+      <a href="#contact" class="btn-ghost">Get in touch →</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <svg class="hero-svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Parametric grid lines -->
+      <path class="param-path" d="M 50 800 Q 150 600 300 400 Q 450 200 550 0" stroke-dasharray="1400"/>
+      <path class="param-path" d="M 0 700 Q 120 520 280 340 Q 420 180 600 50" stroke-dasharray="1400"/>
+      <path class="param-path" d="M 100 800 Q 200 580 340 380 Q 480 200 580 0" stroke-dasharray="1300"/>
+      <path class="param-path" d="M 0 600 C 100 500 200 400 300 300 C 400 200 500 100 600 0" stroke-dasharray="1200"/>
+      <path class="param-path" d="M 0 800 C 100 650 200 500 300 350 C 400 200 500 100 600 0" stroke-dasharray="1400"/>
+      <!-- Horizontal contour lines -->
+      <path class="param-path" d="M 0 200 Q 150 180 300 220 Q 450 260 600 200" stroke-dasharray="800"/>
+      <path class="param-path" d="M 0 400 Q 150 360 300 420 Q 450 480 600 400" stroke-dasharray="800"/>
+      <path class="param-path" d="M 0 600 Q 150 550 300 600 Q 450 650 600 580" stroke-dasharray="800"/>
+      <!-- Control point dots -->
+      <circle class="param-dot" cx="300" cy="300" r="3"/>
+      <circle class="param-dot" cx="150" cy="480" r="3"/>
+      <circle class="param-dot" cx="450" cy="180" r="3"/>
+      <circle class="param-dot" cx="300" cy="600" r="3"/>
+    </svg>
+    <span class="hero-tag">Parametric Geometry — 2025</span>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Architecture</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Product Design</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Computational Design</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Parametric Systems</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Studio Roca</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Architecture</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Product Design</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Computational Design</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Parametric Systems</span>
+    <span class="marquee-item marquee-sep">·</span>
+    <span class="marquee-item">Studio Roca</span>
+    <span class="marquee-item marquee-sep">·</span>
+  </div>
+</div>
+
+<!-- About -->
+<section class="about" id="about">
+  <div>
+    <p class="section-label reveal">About</p>
+  </div>
+  <div class="about-text">
+    <h2 class="reveal">Design that is<br><em>defined by rules,</em><br>freed by possibility.</h2>
+    <p class="reveal">Studio Roca is a computational design practice founded by Noam Beaudoin de Roca. We work at the intersection of architecture and product design, using parametric tools to explore form, structure, and material with precision.</p>
+    <p class="reveal">Every project begins with a set of parameters — constraints that become the creative engine. The result is work that is rigorous, responsive, and never arbitrary.</p>
+    <div class="about-stats reveal">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div>
+        <div class="stat-num">2019</div>
+        <div class="stat-label">Founded</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Work -->
+<section class="work" id="work">
+  <div class="work-header reveal">
+    <h2>Selected Work</h2>
+    <a href="#contact" class="btn">Get in touch</a>
+  </div>
+
+  <!-- Featured interactive model -->
+  <div class="featured-model reveal">
+    <div class="featured-model-meta">
+      <div>
+        <div class="featured-label">Featured · Interactive</div>
+        <div class="featured-title">Flow Desk</div>
+        <div class="featured-cat">Product Design · 2024</div>
+      </div>
+      <p class="featured-desc">Adjust the parameters and explore the form in real time. Drag to orbit, scroll to zoom.</p>
+    </div>
+    <div class="featured-model-viewer">
+      <iframe id="sdv-iframe" width="100%" height="100%" src="https://www.shapediver.com/app/iframe/flow-desk-e1-3?primaryColor=%23C4A882&secondaryColor=%231A1916&surfaceColor=%23FFFFFF&backgroundColor=%23F5F2EE&showControls=1&showZoomButton=1&showFullscreenButton=1&showToggleControlsButton=1&hideDataOutputsIframe=1&hideExportsIframe=1&hideAttributeVisualizationIframe=1&parametersDisable=0&parametersValidation=0" referrerpolicy="origin" allow="clipboard-write; fullscreen" allowfullscreen playsinline webkit-playsinline style="border:none;display:block;width:100%;height:100%;min-height:580px;-webkit-overflow-scrolling:touch;">
+        <p>Your browser does not support iframes.</p>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Project cards -->
+  <div class="project-cards reveal">
+
+    <div class="project-card">
+      <div class="project-card-visual">
+        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="600" height="400" fill="#e4dfd8"/>
+          <ellipse cx="300" cy="200" rx="160" ry="160" fill="none" stroke="#b8b0a4" stroke-width="0.8"/>
+          <ellipse cx="300" cy="200" rx="110" ry="110" fill="none" stroke="#b8b0a4" stroke-width="0.6"/>
+          <ellipse cx="300" cy="200" rx="65" ry="65" fill="none" stroke="#b8b0a4" stroke-width="0.5"/>
+          <ellipse cx="300" cy="200" rx="180" ry="90" fill="none" stroke="#c4a882" stroke-width="0.5" opacity="0.7"/>
+          <ellipse cx="300" cy="200" rx="130" ry="65" fill="none" stroke="#c4a882" stroke-width="0.5" opacity="0.5"/>
+          <line x1="100" y1="200" x2="500" y2="200" stroke="#a8a098" stroke-width="0.5" opacity="0.4"/>
+          <line x1="300" y1="30" x2="300" y2="370" stroke="#a8a098" stroke-width="0.5" opacity="0.4"/>
+          <circle cx="300" cy="200" r="5" fill="#8B7355" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="project-card-info">
+        <div class="project-card-num">01</div>
+        <div class="project-card-title">Orbit Chair</div>
+        <div class="project-card-cat">Product Design · 2024</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-visual">
+        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="600" height="400" fill="#dad4cc"/>
+          <path d="M100 370 L300 50 L500 370 Z" fill="none" stroke="#b0a89e" stroke-width="0.8"/>
+          <path d="M140 330 L300 100 L460 330 Z" fill="none" stroke="#b0a89e" stroke-width="0.6" opacity="0.7"/>
+          <path d="M180 290 L300 150 L420 290 Z" fill="none" stroke="#c4a882" stroke-width="0.5" opacity="0.7"/>
+          <path d="M220 250 L300 200 L380 250 Z" fill="none" stroke="#c4a882" stroke-width="0.4" opacity="0.5"/>
+          <line x1="100" y1="370" x2="500" y2="370" stroke="#a8a098" stroke-width="0.5" opacity="0.6"/>
+          <line x1="140" y1="330" x2="460" y2="330" stroke="#a8a098" stroke-width="0.4" opacity="0.4"/>
+          <circle cx="300" cy="50" r="4" fill="#8B7355" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="project-card-info">
+        <div class="project-card-num">02</div>
+        <div class="project-card-title">Apex Canopy</div>
+        <div class="project-card-cat">Architecture · 2023</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-visual">
+        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="600" height="400" fill="#e0dbd2"/>
+          <rect x="100" y="60" width="400" height="280" fill="none" stroke="#b0a89e" stroke-width="0.8"/>
+          <rect x="150" y="100" width="300" height="200" fill="none" stroke="#b8b0a4" stroke-width="0.6" opacity="0.8"/>
+          <rect x="200" y="140" width="200" height="120" fill="none" stroke="#c4a882" stroke-width="0.5" opacity="0.7"/>
+          <rect x="240" y="165" width="120" height="70" fill="#c4a882" opacity="0.12"/>
+          <line x1="100" y1="60" x2="500" y2="340" stroke="#a8a098" stroke-width="0.4" opacity="0.4"/>
+          <line x1="500" y1="60" x2="100" y2="340" stroke="#a8a098" stroke-width="0.4" opacity="0.4"/>
+          <circle cx="300" cy="200" r="5" fill="#8B7355" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="project-card-info">
+        <div class="project-card-num">03</div>
+        <div class="project-card-title">Recursive Table</div>
+        <div class="project-card-cat">Product Design · 2023</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="services-intro">
+    <p class="section-label reveal">Services</p>
+    <h2 class="reveal">What we<br><em>bring to the table</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-item reveal">
+      <span class="service-num">01</span>
+      <div class="service-title">Architectural Design</div>
+      <p class="service-desc">From concept to construction documentation. We design buildings, pavilions, and spatial installations using computational methods that generate form from environmental, structural, and programmatic data.</p>
+    </div>
+    <div class="service-item reveal">
+      <span class="service-num">02</span>
+      <div class="service-title">Product Design</div>
+      <p class="service-desc">Objects that carry the logic of their making. Furniture, lighting, and objects developed through digital fabrication workflows — CNC, 3D printing, and bespoke joinery — with parametric precision.</p>
+    </div>
+    <div class="service-item reveal">
+      <span class="service-num">03</span>
+      <div class="service-title">Parametric Consulting</div>
+      <p class="service-desc">We help architecture and design firms integrate parametric and computational tools into their practice — Grasshopper, Rhino, scripting workflows, and custom plugin development.</p>
+    </div>
+    <div class="service-item reveal">
+      <span class="service-num">04</span>
+      <div class="service-title">Design Research</div>
+      <p class="service-desc">Experimental projects that push the boundaries of form, material, and process. We collaborate with institutions, manufacturers, and researchers on speculative and applied design investigations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="process">
+  <div class="process-inner">
+    <div class="process-header">
+      <p class="section-label">Process</p>
+      <h2>How we<br>work <em>with you</em></h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <span class="step-num">01 — Brief</span>
+        <div class="step-title">Define the parameters</div>
+        <p class="step-desc">We start by understanding the constraints — site, budget, material, program. These become the inputs that drive the design system.</p>
+      </div>
+      <div class="process-step reveal">
+        <span class="step-num">02 — Explore</span>
+        <div class="step-title">Generate possibilities</div>
+        <p class="step-desc">Using computational tools we rapidly explore a wide solution space — producing variations that would be impossible to develop by hand.</p>
+      </div>
+      <div class="process-step reveal">
+        <span class="step-num">03 — Refine</span>
+        <div class="step-title">Select and develop</div>
+        <p class="step-desc">Together we select the most promising directions and develop them into resolved proposals with full technical documentation.</p>
+      </div>
+      <div class="process-step reveal">
+        <span class="step-num">04 — Deliver</span>
+        <div class="step-title">Build with precision</div>
+        <p class="step-desc">From fabrication files to site supervision, we see every project through to a built outcome — with the same rigor as the design phase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ShapeDiver Model -->
+<section class="shapediver-section" id="model">
+  <div class="shapediver-inner">
+    <div class="shapediver-header reveal">
+      <div>
+        <p class="section-label">Interactive Model</p>
+      </div>
+      <div>
+        <h2>Explore the <em>geometry</em></h2>
+        <p class="shapediver-desc">Interact with the parametric model directly in your browser. Adjust parameters and watch the form respond in real time.</p>
+      </div>
+    </div>
+    <div class="shapediver-viewer-wrap reveal">
+      <div style="width:100%;height:600px;overflow:hidden;">
+        <iframe id="sdv-iframe" width="100%" height="600" src="https://www.shapediver.com/app/iframe/flow-desk-e1-3?primaryColor=%23317DD4&secondaryColor=%23393A45&surfaceColor=%23FFFFFF&backgroundColor=%23F8F8F8&showControls=1&showZoomButton=1&showFullscreenButton=1&showToggleControlsButton=1&hideDataOutputsIframe=1&hideExportsIframe=1&hideAttributeVisualizationIframe=1&parametersDisable=1&parametersValidation=0" referrerpolicy="origin" allow="clipboard-write" allowfullscreen style="overflow:hidden;border-width:0;display:block;">
+          <p>Your browser does not support iframes.</p>
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <span class="contact-label reveal">Let's work together</span>
+  <h2 class="reveal">Start a<br><em>conversation.</em></h2>
+  <p class="reveal">Whether you have a project in mind or just want to explore what parametric design could do for you — we'd love to hear from you.</p>
+  <a href="mailto:hello@studioroca.com" class="contact-email reveal">hello@studioroca.com</a>
+  <br>
+  <a href="mailto:hello@studioroca.com" class="btn reveal">Send a message</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <a href="#" class="footer-logo">Studio Roca</a>
+  <p class="footer-copy">© 2025 Studio Roca. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">LinkedIn</a></li>
+    <li><a href="#">Behance</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width = '54px';
+      ring.style.height = '54px';
+      ring.style.opacity = '0.2';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '32px';
+      ring.style.height = '32px';
+      ring.style.opacity = '0.35';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
