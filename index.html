@@ -547,7 +547,7 @@ footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex;
   }
   async function tryPass(){
     const h=await hashPw(document.getElementById('gate-pw').value);
-    if(h==='d1b12557fcc83b505e5f76fec58659b1c4d8ea0a29bfbc613cf7f2c8e4054cc7'){
+    if(h==='db55da3fc3098e9c42311c6013304ff36b19ef73d12ea932054b5ad51df4f49d'){
       sessionStorage.setItem('sr_auth','1');
       document.getElementById('gate').remove();
     } else {
